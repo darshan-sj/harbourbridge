@@ -1,0 +1,58 @@
+// Copyright 2022 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package util
+
+import (
+	"context"
+
+	datastream "cloud.google.com/go/datastream/apiv1"
+	"cloud.google.com/go/datastream/apiv1/datastreampb"
+)
+
+type DSResourceManager struct {
+}
+
+func (*DSResourceManager) GetConnectionProfile(id string) (*datastreampb.ConnectionProfile, error) {
+	ctx := context.Background()
+	dsClient, err := datastream.NewClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer dsClient.Close()
+	connectionProfile, err := dsClient.GetConnectionProfile(ctx, &datastreampb.GetConnectionProfileRequest{
+		Name: id,
+	})
+	return connectionProfile, err
+}
+
+func (*DSResourceManager) DeleteConnectionProfile(id string) error {
+	ctx := context.Background()
+	dsClient, err := datastream.NewClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer dsClient.Close()
+	op, err := dsClient.DeleteConnectionProfile(ctx, &datastreampb.DeleteConnectionProfileRequest{
+		Name: id,
+	})
+	if err != nil {
+		return err
+	}
+	err = op.Wait(ctx)
+	if err != nil {
+		return err
+	}
+	return nil
+}

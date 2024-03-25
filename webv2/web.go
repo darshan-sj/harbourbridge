@@ -2237,7 +2237,7 @@ func updateProgress(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(detail)
 }
 
-func migrate(w http.ResponseWriter, r *http.Request) {
+func Migrate(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("request started", "method", r.Method, "path", r.URL.Path)
 	reqBody, err := ioutil.ReadAll(r.Body)

@@ -90,7 +90,7 @@ func getRoutes() *mux.Router {
 	router.HandleFunc("/SetSpannerConfig", config.SetSpannerConfig).Methods("POST")
 
 	// Run migration
-	router.HandleFunc("/Migrate", migrate).Methods("POST")
+	router.HandleFunc("/Migrate", Migrate).Methods("POST")
 
 	router.HandleFunc("/GetSourceDestinationSummary", getSourceDestinationSummary).Methods("GET")
 	router.HandleFunc("/GetProgress", updateProgress).Methods("GET")

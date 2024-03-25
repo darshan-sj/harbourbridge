@@ -17,15 +17,19 @@ package minimal_downtime_migration
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
+	"cloud.google.com/go/compute/metadata"
 	"github.com/GoogleCloudPlatform/spanner-migration-tool/common/constants"
+	"github.com/GoogleCloudPlatform/spanner-migration-tool/common/utils"
 	"github.com/GoogleCloudPlatform/spanner-migration-tool/internal"
+	"github.com/GoogleCloudPlatform/spanner-migration-tool/testing/minimal_downtime_migration/util"
 	"github.com/GoogleCloudPlatform/spanner-migration-tool/webv2/profile"
 	"github.com/GoogleCloudPlatform/spanner-migration-tool/webv2/session"
-	"github.com/GoogleCloudPlatform/spanner-migration-tool/common/utils"
 )
 
 func TestCreateConnectionProfileMySQL(t *testing.T) {
@@ -33,21 +37,25 @@ func TestCreateConnectionProfileMySQL(t *testing.T) {
 
 	sessionState.Driver = constants.MYSQL
 	sessionState.Conv = internal.MakeConv()
-	sessionState.GCPProjectID = "span-cloud-testing"
+	projectID, err := metadata.ProjectID()
+	if err != nil {
+		t.Fatal(err)
+	}
+	sessionState.GCPProjectID = projectID
 	sessionState.Region = "us-central1"
 	sessionState.SourceDBConnDetails = session.SourceDBConnDetails{
-		Host:"34.69.106.17",
-		Port:"3306",
-		User:"root",
-		Password:"root",
+		Host:     util.GetIp(),
+		Port:     "3306",
+		User:     os.Getenv("MYSQLUSER"),
+		Password: os.Getenv("MYSQLPWD"),
 	}
 	id, err := utils.GenerateName("it-source-")
 	if err != nil {
 		t.Fatal(err)
 	}
 	payload := map[string]interface{}{
-		"Id": id,
-		"IsSource": true,
+		"Id":           id,
+		"IsSource":     true,
 		"ValidateOnly": false,
 	}
 
@@ -69,5 +77,19 @@ func TestCreateConnectionProfileMySQL(t *testing.T) {
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
+	}
+	connectionProfileID := fmt.Sprintf("projects/%s/locations/%s/connectionProfiles/%s", projectID, "us-central1", id)
+
+	datastreamRM := util.DSResourceManager{}
+	connectionProfile, err := datastreamRM.GetConnectionProfile(connectionProfileID)
+	if err != nil {
+		t.Errorf("Could not fetch created connection profile: err=%v", err)
+	}
+	if connectionProfile.GetName() != connectionProfileID {
+		t.Errorf("Wrong connection profile: got %v want %v", connectionProfile.GetName(), fmt.Sprintf("projects/%s/locations/%s/connectionProfiles/%s", projectID, "us-central1", id))
+	}
+	err = datastreamRM.DeleteConnectionProfile(connectionProfileID)
+	if err != nil {
+		t.Errorf("Could not cleanup connection profile: err=%v", err)
 	}
 }

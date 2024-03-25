@@ -1,0 +1,441 @@
+{
+    "SessionName": "NewSession",
+    "EditorName": "",
+    "DatabaseType": "mysql",
+    "DatabaseName": "l1",
+    "Dialect": "google_standard_sql",
+    "Notes": null,
+    "Tags": null,
+    "SpSchema": {
+        "t13": {
+            "Name": "Movie",
+            "ColIds": [
+                "c15",
+                "c16",
+                "c17",
+                "c18"
+            ],
+            "ShardIdColumn": "",
+            "ColDefs": {
+                "c15": {
+                    "Name": "id",
+                    "T": {
+                        "Name": "INT64",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": true,
+                    "Comment": "From: id int(10)",
+                    "Id": "c15"
+                },
+                "c16": {
+                    "Name": "name",
+                    "T": {
+                        "Name": "STRING",
+                        "Len": 200,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: name varchar(200)",
+                    "Id": "c16"
+                },
+                "c17": {
+                    "Name": "actor",
+                    "T": {
+                        "Name": "NUMERIC",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: actor decimal(65,30)",
+                    "Id": "c17"
+                },
+                "c18": {
+                    "Name": "startTime",
+                    "T": {
+                        "Name": "TIMESTAMP",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: startTime timestamp",
+                    "Id": "c18"
+                }
+            },
+            "PrimaryKeys": [
+                {
+                    "ColId": "c15",
+                    "Desc": false,
+                    "Order": 1
+                }
+            ],
+            "ForeignKeys": null,
+            "Indexes": null,
+            "ParentId": "",
+            "Comment": "Spanner schema for source table Movie",
+            "Id": "t13"
+        },
+        "t14": {
+            "Name": "Users",
+            "ColIds": [
+                "c19",
+                "c20",
+                "c21",
+                "c22",
+                "c23",
+                "c24"
+            ],
+            "ShardIdColumn": "",
+            "ColDefs": {
+                "c19": {
+                    "Name": "id",
+                    "T": {
+                        "Name": "INT64",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": true,
+                    "Comment": "From: id int(10)",
+                    "Id": "c19"
+                },
+                "c20": {
+                    "Name": "name",
+                    "T": {
+                        "Name": "STRING",
+                        "Len": 200,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: name varchar(200)",
+                    "Id": "c20"
+                },
+                "c21": {
+                    "Name": "age",
+                    "T": {
+                        "Name": "INT64",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: age bigint(19)",
+                    "Id": "c21"
+                },
+                "c22": {
+                    "Name": "subscribed",
+                    "T": {
+                        "Name": "BOOL",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: subscribed bit(1)",
+                    "Id": "c22"
+                },
+                "c23": {
+                    "Name": "plan",
+                    "T": {
+                        "Name": "STRING",
+                        "Len": 1,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: plan char(1)",
+                    "Id": "c23"
+                },
+                "c24": {
+                    "Name": "startDate",
+                    "T": {
+                        "Name": "DATE",
+                        "Len": 0,
+                        "IsArray": false
+                    },
+                    "NotNull": false,
+                    "Comment": "From: startDate date",
+                    "Id": "c24"
+                }
+            },
+            "PrimaryKeys": [
+                {
+                    "ColId": "c19",
+                    "Desc": false,
+                    "Order": 1
+                }
+            ],
+            "ForeignKeys": null,
+            "Indexes": null,
+            "ParentId": "",
+            "Comment": "Spanner schema for source table Users",
+            "Id": "t14"
+        }
+    },
+    "SyntheticPKeys": {},
+    "SrcSchema": {
+        "t13": {
+            "Name": "Movie",
+            "Schema": "l1",
+            "ColIds": [
+                "c15",
+                "c16",
+                "c17",
+                "c18"
+            ],
+            "ColDefs": {
+                "c15": {
+                    "Name": "id",
+                    "Type": {
+                        "Name": "int",
+                        "Mods": [
+                            10
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": true,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c15"
+                },
+                "c16": {
+                    "Name": "name",
+                    "Type": {
+                        "Name": "varchar",
+                        "Mods": [
+                            200
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c16"
+                },
+                "c17": {
+                    "Name": "actor",
+                    "Type": {
+                        "Name": "decimal",
+                        "Mods": [
+                            65,
+                            30
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c17"
+                },
+                "c18": {
+                    "Name": "startTime",
+                    "Type": {
+                        "Name": "timestamp",
+                        "Mods": null,
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c18"
+                }
+            },
+            "PrimaryKeys": [
+                {
+                    "ColId": "c15",
+                    "Desc": false,
+                    "Order": 1
+                }
+            ],
+            "ForeignKeys": null,
+            "Indexes": null,
+            "Id": "t13"
+        },
+        "t14": {
+            "Name": "Users",
+            "Schema": "l1",
+            "ColIds": [
+                "c19",
+                "c20",
+                "c21",
+                "c22",
+                "c23",
+                "c24"
+            ],
+            "ColDefs": {
+                "c19": {
+                    "Name": "id",
+                    "Type": {
+                        "Name": "int",
+                        "Mods": [
+                            10
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": true,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c19"
+                },
+                "c20": {
+                    "Name": "name",
+                    "Type": {
+                        "Name": "varchar",
+                        "Mods": [
+                            200
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c20"
+                },
+                "c21": {
+                    "Name": "age",
+                    "Type": {
+                        "Name": "bigint",
+                        "Mods": [
+                            19
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c21"
+                },
+                "c22": {
+                    "Name": "subscribed",
+                    "Type": {
+                        "Name": "bit",
+                        "Mods": [
+                            1
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c22"
+                },
+                "c23": {
+                    "Name": "plan",
+                    "Type": {
+                        "Name": "char",
+                        "Mods": [
+                            1
+                        ],
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c23"
+                },
+                "c24": {
+                    "Name": "startDate",
+                    "Type": {
+                        "Name": "date",
+                        "Mods": null,
+                        "ArrayBounds": null
+                    },
+                    "NotNull": false,
+                    "Ignored": {
+                        "Check": false,
+                        "Identity": false,
+                        "Default": false,
+                        "Exclusion": false,
+                        "ForeignKey": false,
+                        "AutoIncrement": false
+                    },
+                    "Id": "c24"
+                }
+            },
+            "PrimaryKeys": [
+                {
+                    "ColId": "c19",
+                    "Desc": false,
+                    "Order": 1
+                }
+            ],
+            "ForeignKeys": null,
+            "Indexes": null,
+            "Id": "t14"
+        }
+    },
+    "SchemaIssues": {
+        "t13": {
+            "ColumnLevelIssues": {
+                "c15": [
+                    14
+                ]
+            },
+            "TableLevelIssues": null
+        },
+        "t14": {
+            "ColumnLevelIssues": {
+                "c19": [
+                    14
+                ]
+            },
+            "TableLevelIssues": null
+        }
+    },
+    "Location": {},
+    "TimezoneOffset": "+00:00",
+    "SpDialect": "google_standard_sql",
+    "UniquePKey": {},
+    "Rules": [],
+    "IsSharded": false
+}

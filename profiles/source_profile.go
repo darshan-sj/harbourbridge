@@ -788,5 +788,8 @@ func NewSourceProfile(s string, source string) (SourceProfile, error) {
 var filePipedToStdin = func() bool {
 	stat, _ := os.Stdin.Stat()
 	// Data is being piped to stdin, if true. Else, stdin is from a terminal.
-	return (stat.Mode() & os.ModeCharDevice) == 0
+	a := stat.Mode()
+	b := os.ModeCharDevice
+	x := a & b
+	return x == 1
 }
